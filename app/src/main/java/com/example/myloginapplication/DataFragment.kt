@@ -2,14 +2,19 @@ package com.example.myloginapplication
 
 import android.os.Build
 import android.os.Bundle
-import android.os.StrictMode
-import android.os.StrictMode.ThreadPolicy
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
+
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+
 import okhttp3.OkHttpClient;
 
 import okhttp3.Request
@@ -34,6 +39,7 @@ class DataFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    val drawer_layout: DrawerLayout? = null
 
 
     override fun onCreateView(
@@ -42,54 +48,20 @@ class DataFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_data, container, false)
-        val button = view.findViewById<Button>(R.id.button2)
+        var drawer_Layout: DrawerLayout = view.findViewById(R.id.Drawer_layout)
+        val nav_view: NavigationView = view.findViewById(R.id.nav_view)
+        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
+        val toggle : ActionBarDrawerToggle = ActionBarDrawerToggle(requireActivity(),drawer_Layout,toolbar,R.string.open_nav,R.string.close_nav)
 
-        button.setOnClickListener {
-            button.setText("CIAO")
-            val responseTextView = view.findViewById<TextView>(R.id.responseTextView)
-
-
-            val SDK_INT = Build.VERSION.SDK_INT
-            if (SDK_INT > 8) {
-                val policy = ThreadPolicy.Builder()
-                    .permitAll().build()
-                StrictMode.setThreadPolicy(policy)
-                try {
-                    val client = OkHttpClient.Builder()
-                        .callTimeout(30000, TimeUnit.MILLISECONDS)
-                        .build()
-
-                    val request = Request.Builder()
-                        .url("https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=tesla&region=US")
-                        .get()
-                        .addHeader(
-                            "X-RapidAPI-Key",
-                            "0f3731783dmshbf77e223a93fd29p17b87fjsn662b2e150b17"
-                        )
-                        .addHeader("X-RapidAPI-Host", "apidojo-yahoo-finance-v1.p.rapidapi.com")
-                        .build()
-
-
-                    val response = client.newCall(request).execute()
-                    val responseBody = response.body?.string()
-                    println(responseBody)
-                    //LETTURA JSON
-                    //responseTextView.text = responseBody
-
-
-                } catch (e: SocketTimeoutException){
-                    println(e.toString())
-                }
-
-
-
-            }
-        }
-
-
+        drawer_Layout.addDrawerListener(toggle)
+        toggle.syncState()
 
         return view
     }
+
+
+
+
 
 
 }
