@@ -1,29 +1,15 @@
-package com.example.myloginapplication
+package com.example.myloginapplication.view
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
-
+import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import com.google.android.material.button.MaterialButton
+import com.example.myloginapplication.R
 import com.google.android.material.navigation.NavigationView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
-
-import okhttp3.OkHttpClient;
-
-import okhttp3.Request
-import java.io.IOException
-import java.io.InputStream
-import java.net.SocketTimeoutException
-import java.nio.charset.Charset
-import java.util.concurrent.TimeUnit
-
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,7 +37,13 @@ class DataFragment : Fragment() {
         var drawer_Layout: DrawerLayout = view.findViewById(R.id.Drawer_layout)
         val nav_view: NavigationView = view.findViewById(R.id.nav_view)
         val toolbar: Toolbar = view.findViewById(R.id.toolbar)
-        val toggle : ActionBarDrawerToggle = ActionBarDrawerToggle(requireActivity(),drawer_Layout,toolbar,R.string.open_nav,R.string.close_nav)
+        val toggle : ActionBarDrawerToggle = ActionBarDrawerToggle(
+            requireActivity(),
+            drawer_Layout,
+            toolbar,
+            R.string.open_nav,
+            R.string.close_nav
+        )
 
         drawer_Layout.addDrawerListener(toggle)
         toggle.syncState()

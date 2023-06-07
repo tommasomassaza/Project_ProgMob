@@ -1,13 +1,10 @@
-package com.example.myloginapplication
+package com.example.myloginapplication.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.MediaController
-import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.button.MaterialButton
+import com.example.myloginapplication.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -17,6 +14,5 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         navController = navHostFragment.navController
-        //ciao
     }
 }

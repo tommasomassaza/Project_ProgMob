@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgorund_1"
-    tools:context=".MainActivity"
+    tools:context=".view.MainActivity"
 
 
     >
@@ -22,7 +22,7 @@
         android:gravity="center" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/signIn"
@@ -39,7 +39,7 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/username"
+        android:layout_below="@id/email"
         android:hint="Password"
         android:layout_margin="10dp"
         android:padding="20dp"
