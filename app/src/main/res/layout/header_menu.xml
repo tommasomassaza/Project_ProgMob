@@ -15,15 +15,16 @@
     android:layout_marginTop="10dp">
 
 </TextView>
+
     <ImageView
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:src="@drawable/baseline_tag_faces_24"></ImageView>
+        android:src="@drawable/baseline_tag_faces_24" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nome 20dp"
-        android:layout_marginTop="10dp"></TextView>
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>

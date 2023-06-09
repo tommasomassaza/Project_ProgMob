@@ -19,19 +19,23 @@ class SignUpFragment : Fragment() {
     private val TAG: String = javaClass.simpleName
     private val userViewModel: UserViewModel? by activityViewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        initObservers()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_sign_up, container, false)
+        val view = inflater.inflate(R.layout.fragment_signup, container, false)
         val buttonSignup: MaterialButton = view.findViewById(R.id.signupbtn)
         val insertName : EditText = view.findViewById(R.id.namesignup)
         val insertSurname : EditText = view.findViewById(R.id.surnamesignup)
         val insertEmail : EditText = view.findViewById(R.id.emailsignup)
         val insertPassword1 : EditText = view.findViewById(R.id.password1)
         val insertPassword2 : EditText = view.findViewById(R.id.password2)
-
-        initObservers()
 
         buttonSignup.setOnClickListener {
             val name = insertName.text.toString()
@@ -57,12 +61,12 @@ class SignUpFragment : Fragment() {
 
     private fun initObservers() {
         Log.i(TAG, "Registering Observers: ViewModel? $userViewModel")
-        userViewModel?.registrationResult?.observe(viewLifecycleOwner) { registrationResult ->
+        userViewModel?.registrationResult?.observe(this) { registrationResult ->
             when (registrationResult) {
                 is RegistrationResult.Success -> {
                     Toast.makeText(activity, "Sign Up Success", Toast.LENGTH_SHORT).show()
                     Log.i(TAG, "Sign Up Success")
-                    findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
+                    findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
                 }
                 is RegistrationResult.Error -> {
                     Toast.makeText(activity, "Registration Failed", Toast.LENGTH_SHORT).show()

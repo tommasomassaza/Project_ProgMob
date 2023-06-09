@@ -1,64 +1,51 @@
 package com.example.myloginapplication.view
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.myloginapplication.R
-import com.example.myloginapplication.viewmodel.UserViewModel
-import com.google.android.material.button.MaterialButton
 
 class HomeFragment : Fragment() {
     private val TAG: String = javaClass.simpleName
-    private val userViewModel: UserViewModel? by activityViewModels()
+    private lateinit var sharedPreferences: SharedPreferences
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Inizializza le SharedPreferences
+        // Ottieni le SharedPreferences, se non esistono, vengono create
+        sharedPreferences = requireActivity().getSharedPreferences("login_preferences", Context.MODE_PRIVATE)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_homefragment, container, false)
         // Inflate the layout for this fragment
-        val email: TextView = view.findViewById(R.id.email)
-        val password: TextView = view.findViewById(R.id.password)
-        val signUpLink: TextView = view.findViewById(R.id.signuplink)
-        val buttonLogin: MaterialButton = view.findViewById(R.id.loginbtn)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        // sharedPreferences.getBoolean("first_login", true) legge il valore booleano associato alla chiave "first_login" dalle SharedPreferences.
+        // Se la chiave non esiste, viene restituito il valore predefinito "true".
+        val isFirstLogin = sharedPreferences.getBoolean("first_login", true)
 
-        initObservers()
 
-        buttonLogin.setOnClickListener {
-            val userEmail = email.text.toString()
-            val userPassword = password.text.toString()
-            userViewModel?.login(userEmail,userPassword)
+        if(isFirstLogin) {
+            // Primo login dell'utente, esegui la navigazione al LoginFragment
+            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+            Log.i(TAG, "Redirect to fragment_login")
+        } else{
+            Log.i(TAG, "Already authenticated")
         }
-
-        signUpLink.setOnClickListener{
-            findNavController().navigate(R.id.action_homeFragment_to_signUpFragment)
-        }
-
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    /**
-     * it initalises the view model and the methods used to retrieve the live data for the interface
-     */
-    private fun initObservers() {
-        Log.i(TAG, "Registering Observers: ViewModel? $userViewModel")
-        userViewModel?.loginResult?.observe(viewLifecycleOwner) { loginResult ->
-            if(loginResult) {
-                Toast.makeText(activity, "Login successful", Toast.LENGTH_SHORT).show()
-                Log.i(TAG, "Login Successful")
-                findNavController().navigate(R.id.action_homeFragment_to_dataFragment)
-            } else {
-                Toast.makeText(activity, "Wrong username or password", Toast.LENGTH_SHORT).show()
-                Log.i(TAG, "Login Failed")
-            }
-        }
     }
 }
